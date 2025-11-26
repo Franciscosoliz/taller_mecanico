@@ -1,0 +1,844 @@
+{
+  "info": {
+    "_postman_id": "c4f2f9c1-0000-0000-0000-taller-mecanico",
+    "name": "Taller Mecánico API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000/api"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login - Obtener Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"tu_password\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login",
+                ""
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.collectionVariables.set(\"token\", jsonData.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Clientes",
+      "item": [
+        {
+          "name": "Listar Clientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/clientes/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Detalle Cliente (id)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/clientes/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Cliente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Juan Pérez\",\n  \"telefono\": \"0999999999\",\n  \"correo\": \"juan@example.com\",\n  \"direccion\": \"Quito\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/clientes/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar Cliente (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_cliente\": 1,\n  \"nombre\": \"Juan P. Actualizado\",\n  \"telefono\": \"0988888888\",\n  \"correo\": \"juan.actualizado@example.com\",\n  \"direccion\": \"Quito Norte\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/clientes/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar Cliente",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Vehículos",
+      "item": [
+        {
+          "name": "Listar Vehículos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/vehiculos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "vehiculos",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Detalle Vehículo (id)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/vehiculos/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "vehiculos",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Vehículo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"placa\": \"ABC1234\",\n  \"marca\": \"Chevrolet\",\n  \"modelo\": \"Aveo\",\n  \"anio\": 2015,\n  \"cliente\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/vehiculos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "vehiculos",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar Vehículo (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_vehiculo\": 1,\n  \"placa\": \"ABC1234\",\n  \"marca\": \"Chevrolet\",\n  \"modelo\": \"Aveo LT\",\n  \"anio\": 2016,\n  \"cliente\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/vehiculos/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "vehiculos",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar Vehículo",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/vehiculos/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "vehiculos",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Mecánicos",
+      "item": [
+        {
+          "name": "Listar Mecánicos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/mecanicos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mecanicos",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Detalle Mecánico (id)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/mecanicos/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mecanicos",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Mecánico",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Carlos López\",\n  \"especialidad\": \"Mecánica general\",\n  \"telefono\": \"0987654321\",\n  \"estado\": \"activo\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/mecanicos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mecanicos",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar Mecánico (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_mecanico\": 1,\n  \"nombre\": \"Carlos L. Actualizado\",\n  \"especialidad\": \"Electricidad automotriz\",\n  \"telefono\": \"0987654321\",\n  \"estado\": \"activo\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/mecanicos/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mecanicos",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar Mecánico",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mecanicos/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mecanicos",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Servicios",
+      "item": [
+        {
+          "name": "Listar Servicios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/servicios/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "servicios",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Detalle Servicio (id)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/servicios/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "servicios",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Servicio",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cambio de aceite\",\n  \"descripcion\": \"Cambio de aceite y filtro\",\n  \"precio_referencial\": \"35.00\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/servicios/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "servicios",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar Servicio (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_servicio\": 1,\n  \"nombre\": \"Cambio de aceite premium\",\n  \"descripcion\": \"Incluye aceite sintético\",\n  \"precio_referencial\": \"45.00\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/servicios/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "servicios",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar Servicio",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/servicios/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "servicios",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Órdenes de Reparación",
+      "item": [
+        {
+          "name": "Listar Órdenes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/ordenes/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ordenes",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Detalle Orden (id)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/ordenes/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ordenes",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Orden",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehiculo\": 1,\n  \"mecanico\": 1,\n  \"fecha_ingreso\": \"2025-11-24T10:00:00Z\",\n  \"fecha_salida\": null,\n  \"estado\": \"pendiente\",\n  \"observaciones\": \"Revisión general\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ordenes/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ordenes",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar Orden (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_orden\": 1,\n  \"vehiculo\": 1,\n  \"mecanico\": 1,\n  \"fecha_ingreso\": \"2025-11-24T10:00:00Z\",\n  \"fecha_salida\": \"2025-11-24T12:00:00Z\",\n  \"estado\": \"finalizado\",\n  \"observaciones\": \"Cambio de aceite realizado\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ordenes/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ordenes",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar Orden",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/ordenes/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ordenes",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Detalles de Servicio",
+      "item": [
+        {
+          "name": "Listar Detalles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/detalles/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "detalles",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Detalle DetalleServicio (id)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/detalles/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "detalles",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear DetalleServicio",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orden\": 1,\n  \"servicio\": 1,\n  \"cantidad\": 1,\n  \"precio_unitario\": \"35.00\",\n  \"subtotal\": \"35.00\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/detalles/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "detalles",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar DetalleServicio (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_detalle\": 1,\n  \"orden\": 1,\n  \"servicio\": 1,\n  \"cantidad\": 2,\n  \"precio_unitario\": \"35.00\",\n  \"subtotal\": \"70.00\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/detalles/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "detalles",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar DetalleServicio",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/detalles/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "detalles",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

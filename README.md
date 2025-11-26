@@ -20,7 +20,7 @@ python -m venv .venv
 
 pip install -r requirements.txt
 
-# Configura la base de datos en taller_mecanico_api/settings.py
+## Configura la base de datos en taller_mecanico_api/settings.py
 
 python manage.py migrate
 python manage.py createsuperuser

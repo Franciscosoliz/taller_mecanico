@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-^@gdh3-y0s*#s=s66wq5c98$%b%w@ogx=+(gl=nyu84t681rb^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -80,9 +81,9 @@ WSGI_APPLICATION = 'taller_mecanico_api.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "taller_mecanico_db",   # cambia por tu nombre real
-        "USER": "postgres",             # tu usuario
-        "PASSWORD": "Abc123",      # tu password
+        "NAME": "billing_db",   # cambia por tu nombre real
+        "USER": "billing_user",             # tu usuario
+        "PASSWORD": "billing_pass_123",      # tu password
         "HOST": "localhost",
         "PORT": "5432",
     }
@@ -139,7 +140,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from django.views.generic.base import RedirectView
 
 from taller.views import (
     ClienteViewSet,
@@ -21,6 +22,7 @@ router.register(r"ordenes", OrdenReparacionViewSet, basename="orden")
 router.register(r"detalles", DetalleServicioViewSet, basename="detalle")
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='/admin/', permanent=True)),
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
     path("api/auth/login/", CustomAuthToken.as_view(), name="api_login"),

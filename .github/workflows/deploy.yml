@@ -63,6 +63,7 @@ jobs:
         VPS_HOST: ${{ secrets.VPS_HOST }}
         VPS_USER: ${{ secrets.VPS_USERNAME }}
         # Definimos las rutas exactas de tu servidor aquí directamente
+        REPO_ROOT: /home/Francisco/taller_mecanico_api/taller_mecanico
         PROJECT_PATH: /home/Francisco/taller_mecanico_api/taller_mecanico/taller_mecanico_api
         VENV_PATH: /home/Francisco/venv
       run: |

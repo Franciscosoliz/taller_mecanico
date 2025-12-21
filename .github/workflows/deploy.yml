@@ -61,29 +61,40 @@ jobs:
           
     - name: Deploy to VPS
       env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USERNAME }}
+          HOST: ${{ secrets.VPS_HOST }}
+          USER: ${{ secrets.VPS_USERNAME }}
           REPO_ROOT: /home/Francisco/taller_mecanico_api/taller_mecanico
           PROJECT_PATH: /home/Francisco/taller_mecanico_api/taller_mecanico/taller_mecanico_api
           VENV_PATH: /home/Francisco/venv
       run: |
-          # Añadimos -o StrictHostKeyChecking=no por seguridad extra
-          ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST "
+          ssh -o StrictHostKeyChecking=no $USER@$HOST "
             set -e
-            echo \"Conectado al servidor como: \$(whoami)\"
-            # CONFIGURACIÓN EXTRA DE SEGURIDAD PARA GIT
+            echo \"Conectado como: \$(whoami)\"
+
+            # 1. Configurar Git para usar la llave que acabamos de validar
+            export GIT_SSH_COMMAND=\"ssh -i /home/Francisco/.ssh/github_deploy -o StrictHostKeyChecking=no\"
             git config --global --add safe.directory $REPO_ROOT
+
+            # 2. Actualizar código
             cd $REPO_ROOT
+            echo 'Actualizando repositorio...'
             git fetch origin main
             git reset --hard origin/main
-            
+
+            # 3. Entorno virtual y dependencias
+            echo 'Instalando dependencias...'
             source $VENV_PATH/bin/activate
             pip install -r requirements.txt
-            
+
+            # 4. Django (Migraciones y Estáticos)
+            echo 'Ejecutando tareas de Django...'
             cd $PROJECT_PATH
             python manage.py migrate --noinput
             python manage.py collectstatic --noinput --clear
-            
+
+            # 5. Reiniciar servidor
+            echo 'Reiniciando API...'
             sudo systemctl restart taller_api
-            echo '✅ Despliegue completado con éxito'
+
+            echo '✅ ¡Despliegue completado con éxito!'
           "

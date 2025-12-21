@@ -71,6 +71,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST "
             set -e
             echo 'Conexión establecida como: '$(whoami)
+            # CONFIGURACIÓN EXTRA DE SEGURIDAD PARA GIT
+            git config --global --add safe.directory $REPO_ROOT
             cd $REPO_ROOT
             git fetch origin main
             git reset --hard origin/main

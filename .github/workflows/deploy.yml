@@ -52,45 +52,36 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: Setup SSH
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
-    
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          # Esto evita que la conexión se trabe preguntando por el host
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+          
     - name: Deploy to VPS
-      env:
-        VPS_HOST: ${{ secrets.VPS_HOST }}
-        VPS_USER: ${{ secrets.VPS_USERNAME }}
-        # Definimos las rutas exactas de tu servidor aquí directamente
-        REPO_ROOT: /home/Francisco/taller_mecanico_api/taller_mecanico
-        PROJECT_PATH: /home/Francisco/taller_mecanico_api/taller_mecanico/taller_mecanico_api
-        VENV_PATH: /home/Francisco/venv
-      run: |
-        ssh $VPS_USER@$VPS_HOST "
-          set -e
-          
-          echo '1. Actualizando código...'
-          cd $PROJECT_PATH
-          git fetch origin main
-          git reset --hard origin/main
-          
-          echo '2. Activando entorno virtual...'
-          source $VENV_PATH/bin/activate
-          
-          echo '3. Instalando dependencias...'
-          # Asumiendo que requirements.txt está en PROJECT_PATH
-          pip install -r requirements.txt
-          
-          echo '4. Aplicando migraciones...'
-          python manage.py migrate --noinput
-          
-          echo '5. Colectando archivos estáticos...'
-          python manage.py collectstatic --noinput --clear
-          
-          echo '6. Reiniciando servicio de la API...'
-          # Cambiado de gunicorn a taller_api que es tu servicio real
-          sudo systemctl restart taller_api
-          
-          echo '✅ Despliegue completado con éxito'
-        "
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USERNAME }}
+          REPO_ROOT: /home/Francisco/taller_mecanico_api/taller_mecanico
+          PROJECT_PATH: /home/Francisco/taller_mecanico_api/taller_mecanico/taller_mecanico_api
+          VENV_PATH: /home/Francisco/venv
+        run: |
+          # Añadimos -o StrictHostKeyChecking=no por seguridad extra
+          ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST "
+            set -e
+            echo 'Conexión establecida como: '$(whoami)
+            cd $REPO_ROOT
+            git fetch origin main
+            git reset --hard origin/main
+            
+            source $VENV_PATH/bin/activate
+            pip install -r requirements.txt
+            
+            cd $PROJECT_PATH
+            python manage.py migrate --noinput
+            python manage.py collectstatic --noinput --clear
+            
+            sudo systemctl restart taller_api
+            echo '✅ Despliegue completado con éxito'
+          "

@@ -81,9 +81,9 @@ WSGI_APPLICATION = 'taller_mecanico_api.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "billing_db",   # cambia por tu nombre real
-        "USER": "billing_user",             # tu usuario
-        "PASSWORD": "billing_pass_123",      # tu password
+        "NAME": "taller_mecanico_db",   # cambia por tu nombre real
+        "USER": "taller_user",             # tu usuario
+        "PASSWORD": "francisco",      # tu password
         "HOST": "localhost",
         "PORT": "5432",
     }

@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     # Terceros
     "rest_framework",
     "rest_framework.authtoken",
-    'corsheaders'
+    'corsheaders',
     # Local
     "taller",
 ]

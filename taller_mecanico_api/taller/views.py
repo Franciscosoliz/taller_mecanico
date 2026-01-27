@@ -69,7 +69,11 @@ class OrdenReparacionViewSet(BaseViewSet):
     search_fields = ["vehiculo__placa", "estado", "mecanico__nombre"]
     
     authentication_classes = [] 
-    permission_classes = [drf_permissions.AllowAny]
+    permission_classes = [drf_permissions.AllowAny] 
+
+    # Agregamos esto para estar 100% seguros de que DRF no pida nada
+    def get_permissions(self):
+        return [drf_permissions.AllowAny()]
 
 
 class DetalleServicioViewSet(BaseViewSet):

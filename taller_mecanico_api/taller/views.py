@@ -1,11 +1,11 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from rest_framework import permissions as drf_permissions
 
 from .models import (
     Cliente,
@@ -24,8 +24,7 @@ from .serializers import (
     DetalleServicioSerializer,
 )
 from .permissions import IsAdminOrReadOnly
-from taller_mecanico_api.taller import permissions
-
+from . import permissions
 
 class BaseViewSet(viewsets.ModelViewSet):
     """
@@ -68,8 +67,9 @@ class OrdenReparacionViewSet(BaseViewSet):
     )
     serializer_class = OrdenReparacionSerializer
     search_fields = ["vehiculo__placa", "estado", "mecanico__nombre"]
-    authentication_classes = [] # Desactiva temporalmente para probar
-    permission_classes = [permissions.AllowAny]
+    
+    authentication_classes = [] 
+    permission_classes = [drf_permissions.AllowAny]
 
 
 class DetalleServicioViewSet(BaseViewSet):

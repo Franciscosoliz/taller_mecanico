@@ -58,6 +58,7 @@ class ServicioViewSet(BaseViewSet):
     search_fields = ["nombre", "descripcion"]
 
 # @method_decorator(csrf_exempt, name='dispatch')
+
 class OrdenReparacionViewSet(BaseViewSet):
     queryset = (
         OrdenReparacion.objects

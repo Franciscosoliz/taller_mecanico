@@ -150,9 +150,13 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Y asegúrate de que el dominio del servidor esté aquí también
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://soliz-francisco-taller-mecanico-api.desarrollo-software.xyz" # <--- ESTA
 ]
 
 CORS_ALLOW_METHODS = [

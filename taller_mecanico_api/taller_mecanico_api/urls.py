@@ -25,6 +25,6 @@ router.register(r"detalles", DetalleServicioViewSet, basename="detalle")
 urlpatterns = [
     path('', RedirectView.as_view(url='/admin/', permanent=True)),
     path("admin/", admin.site.urls),
-    path("api/", csrf_exempt(include(router.urls))), 
+    path("api/", include(router.urls)),
     path("api/auth/login/", csrf_exempt(CustomAuthToken.as_view()), name="api_login"),
 ]

@@ -20,7 +20,7 @@ router.register(r"mecanicos", MecanicoViewSet, basename="mecanico")
 router.register(r"servicios", ServicioViewSet, basename="servicio")
 router.register(r"ordenes", OrdenReparacionViewSet, basename="orden")
 router.register(r"detalles", DetalleServicioViewSet, basename="detalle")
-
+    
 urlpatterns = [
     path('', RedirectView.as_view(url='/admin/', permanent=True)),
     path("admin/", admin.site.urls),

@@ -22,6 +22,7 @@ from .serializers import (
     DetalleServicioSerializer,
 )
 from .permissions import IsAdminOrReadOnly
+from taller_mecanico_api.taller import permissions
 
 
 class BaseViewSet(viewsets.ModelViewSet):
@@ -65,6 +66,8 @@ class OrdenReparacionViewSet(BaseViewSet):
     )
     serializer_class = OrdenReparacionSerializer
     search_fields = ["vehiculo__placa", "estado", "mecanico__nombre"]
+    authentication_classes = [] # Desactiva temporalmente para probar
+    permission_classes = [permissions.AllowAny]
 
 
 class DetalleServicioViewSet(BaseViewSet):

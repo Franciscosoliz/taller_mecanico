@@ -132,7 +132,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://soliz-francisco-taller-mecanico-api.desarrollo-software.xyz" # <--- ESTA
+    "https://soliz-francisco-taller-mecanico-api.desarrollo-software.xyz"
+     "https://taller-soliz.desarrollo-software.xyz" # <--- ESTA
 ]
 
 CORS_ALLOW_METHODS = [

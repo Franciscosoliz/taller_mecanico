@@ -4,6 +4,8 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from .models import (
     Cliente,
@@ -56,7 +58,7 @@ class ServicioViewSet(BaseViewSet):
     serializer_class = ServicioSerializer
     search_fields = ["nombre", "descripcion"]
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class OrdenReparacionViewSet(BaseViewSet):
     queryset = (
         OrdenReparacion.objects

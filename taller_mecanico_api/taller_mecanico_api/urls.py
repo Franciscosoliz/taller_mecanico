@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from django.views.generic.base import RedirectView
+from django.views.decorators.csrf import csrf_exempt
 
 from taller.views import (
     ClienteViewSet,
@@ -25,5 +26,5 @@ urlpatterns = [
     path('', RedirectView.as_view(url='/admin/', permanent=True)),
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
-    path("api/auth/login/", CustomAuthToken.as_view(), name="api_login"),
+    path("api/auth/login/", csrf_exempt(CustomAuthToken.as_view()), name="api_login"),
 ]

@@ -57,7 +57,7 @@ class ServicioViewSet(BaseViewSet):
     serializer_class = ServicioSerializer
     search_fields = ["nombre", "descripcion"]
 
-@method_decorator(csrf_exempt, name='dispatch')
+# @method_decorator(csrf_exempt, name='dispatch')
 class OrdenReparacionViewSet(BaseViewSet):
     queryset = (
         OrdenReparacion.objects
